@@ -1,31 +1,24 @@
 <!-- BEGIN_TF_DOCS -->
-# Terraform Intersight Pools - WWNN or WWPN
-Manages Intersight WWNN or WWPN Pools
+# Terraform Intersight Policies - Link Aggregation
+Manages Intersight Link Aggregation Policies
 
 Location in GUI:
-`Pools` » `Create Pool` » `WWNN or WWPN`
+`Policies` » `Create Policy` » `Link Aggregation`
 
 ## Example
 
 ### main.tf
 ```hcl
-module "wwpn_pool" {
-  source  = "scotttyso/pools-fc/intersight"
+module "link_aggregation" {
+  source  = "terraform-cisco-modules/policies-link-aggregation/intersight"
   version = ">= 1.0.1"
 
-  assignment_order = "sequential"
-  description      = "Demo WWPN Pool"
-  id_blocks = [
-    {
-      from = "0:00:00:25:B5:00:00:00"
-      size = 1000
-    }
-  ]
-  name         = "default"
-  organization = "default"
-  pool_purpose = "WWPN"
+  description        = "default Link Aggregation Policy."
+  lacp_rate          = "normal"
+  name               = "default"
+  organization       = "default"
+  suspend_individual = false
 }
-
 ```
 
 ### variables.tf
@@ -82,7 +75,7 @@ export TF_VAR_secretkey=`cat <secret-key-file-location>`
 Windows
 ```bash
 $env:TF_VAR_apikey="<your-api-key>"
-$env:TF_VAR_secretkey=`cat <secret-key-file-location>`
+$env:TF_VAR_secretkey="<secret-key-file-location>""
 ```
 
 
@@ -90,6 +83,7 @@ $env:TF_VAR_secretkey=`cat <secret-key-file-location>`
 
 | Name | Version |
 |------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.3.0 |
 | <a name="requirement_intersight"></a> [intersight](#requirement\_intersight) | >=1.0.32 |
 ## Providers
 
@@ -103,22 +97,21 @@ $env:TF_VAR_secretkey=`cat <secret-key-file-location>`
 | <a name="input_apikey"></a> [apikey](#input\_apikey) | Intersight API Key. | `string` | n/a | yes |
 | <a name="input_endpoint"></a> [endpoint](#input\_endpoint) | Intersight URL. | `string` | `"https://intersight.com"` | no |
 | <a name="input_secretkey"></a> [secretkey](#input\_secretkey) | Intersight Secret Key. | `string` | n/a | yes |
-| <a name="input_assignment_order"></a> [assignment\_order](#input\_assignment\_order) | Assignment order decides the order in which the next identifier is allocated.<br>  * sequential - Identifiers are assigned in a sequential order.<br>  * default - Assignment order is decided by the system. | `string` | `"default"` | no |
-| <a name="input_description"></a> [description](#input\_description) | Description for the Fiber-Channel Pool. | `string` | `""` | no |
-| <a name="input_id_blocks"></a> [id\_blocks](#input\_id\_blocks) | List of WWxN's Configuration Parameters to Assign to the Fiber-Channel Pool.<br>  * from - Staring WWxN Address.  An Example is "20:00:00:25:B5:00:00:00".<br>  * size - Size of WWxN Pool.  An Example is 1000.<br>  * to - Ending WWxN Address.  An Example is "20:00:00:25:B5:00:03:E7".<br>  * IMPORTANT NOTE: You can only Specify `size` or `to` on initial creation.  This is a limitation of the API. | <pre>list(object(<br>    {<br>      from = string<br>      size = optional(number)<br>      to   = optional(string)<br>    }<br>  ))</pre> | `[]` | no |
-| <a name="input_name"></a> [name](#input\_name) | Name for the Fiber-Channel Pool. | `string` | `"default"` | no |
+| <a name="input_description"></a> [description](#input\_description) | Description for the Policy. | `string` | `""` | no |
+| <a name="input_lacp_rate"></a> [lacp\_rate](#input\_lacp\_rate) | Flag used to indicate whether LACP PDUs are to be sent 'fast', i.e., every 1 second.<br>* fast - The fast timeout rate is 1 second.<br>* normal - The normal timeout rate is 30 seconds. | `string` | `"normal"` | no |
+| <a name="input_name"></a> [name](#input\_name) | Name for the Policy. | `string` | `"link_aggregation"` | no |
+| <a name="input_suspend_individual"></a> [suspend\_individual](#input\_suspend\_individual) | Flag tells the switch whether to suspend the port if it didn’t receive LACP PDU. | `bool` | `false` | no |
 | <a name="input_organization"></a> [organization](#input\_organization) | Intersight Organization Name to Apply Policy to.  https://intersight.com/an/settings/organizations/. | `string` | `"default"` | no |
-| <a name="input_pool_purpose"></a> [pool\_purpose](#input\_pool\_purpose) | What type of Fiber-Channel Pool is this.  Options are:<br>  * WWNN<br>  * WWPN | `string` | `"WWPN"` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | List of Tag Attributes to Assign to the Policy. | `list(map(string))` | `[]` | no |
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_moid"></a> [moid](#output\_moid) | WWxN Pool Managed Object ID (moid). |
+| <a name="output_moid"></a> [moid](#output\_moid) | Link Aggregation Policy Managed Object ID (moid). |
 ## Resources
 
 | Name | Type |
 |------|------|
-| [intersight_fcpool_pool.fc_pool](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/fcpool_pool) | resource |
+| [intersight_fabric_link_aggregation_policy.link_aggregation](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/fabric_link_aggregation_policy) | resource |
 | [intersight_organization_organization.org_moid](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/data-sources/organization_organization) | data source |
 <!-- END_TF_DOCS -->

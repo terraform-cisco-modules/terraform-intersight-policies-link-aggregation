@@ -5,7 +5,12 @@
 #____________________________________________________________
 
 data "intersight_organization_organization" "org_moid" {
-  name = var.organization
+  for_each = {
+    for v in [var.organization] : v => v if length(
+      regexall("[[:xdigit:]]{24}", var.organization)
+    ) == 0
+  }
+  name     = each.value
 }
 
 #__________________________________________________________________
@@ -18,12 +23,16 @@ resource "intersight_fabric_link_aggregation_policy" "link_aggregation" {
   depends_on = [
     data.intersight_organization_organization.org_moid
   ]
-  description = var.description != "" ? var.description : "${var.name} Link Aggregation Policy."
+  description        = var.description != "" ? var.description : "${var.name} Link Aggregation Policy."
   name               = var.name
   lacp_rate          = var.lacp_rate
   suspend_individual = var.suspend_individual
   organization {
-    moid        = data.intersight_organization_organization.org_moid.results[0].moid
+    moid = length(
+      regexall("[[:xdigit:]]{24}", var.organization)
+      ) > 0 ? var.organization : data.intersight_organization_organization.org_moid[
+      var.organization].results[0
+    ].moid
     object_type = "organization.Organization"
   }
   dynamic "tags" {

@@ -1,5 +1,5 @@
 <!-- BEGIN_TF_DOCS -->
-# Fibre-Channel Pool Example
+# Link Aggregation Policy Example
 
 To run this example you need to execute:
 
@@ -13,23 +13,16 @@ Note that this example will create resources. Resources can be destroyed with `t
 
 ### main.tf
 ```hcl
-module "wwpn_pool" {
-  source  = "scotttyso/pools-fc/intersight"
+module "link_aggregation" {
+  source  = "terraform-cisco-modules/policies-link-aggregation/intersight"
   version = ">= 1.0.1"
 
-  assignment_order = "sequential"
-  description      = "Demo WWPN Pool"
-  id_blocks = [
-    {
-      from = "0:00:00:25:B5:00:00:00"
-      size = 1000
-    }
-  ]
-  name         = "default"
-  organization = "default"
-  pool_purpose = "WWPN"
+  description        = "default Link Aggregation Policy."
+  lacp_rate          = "normal"
+  name               = "default"
+  organization       = "default"
+  suspend_individual = false
 }
-
 ```
 
 ### variables.tf

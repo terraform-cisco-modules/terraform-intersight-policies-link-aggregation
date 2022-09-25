@@ -3,11 +3,11 @@ version: '>= 0.14.0'
 formatter: markdown table
 
 content: |-
-  # Terraform Intersight Policies - VSAN
-  Manages Intersight VSAN Policies
+  # Terraform Intersight Policies - Link Aggregation
+  Manages Intersight Link Aggregation Policies
   
   Location in GUI:
-  `Policies` » `Create Policy` » `VSAN`
+  `Policies` » `Create Policy` » `Link Aggregation`
   
   ## Example
 
@@ -16,14 +16,14 @@ content: |-
   {{ include "examples/complete/main.tf" }}
   ```
 
+  ### provider.tf
+  ```hcl
+  {{ include "examples/complete/provider.tf" }}
+  ```
+
   ### variables.tf
   ```hcl
   {{ include "examples/complete/variables.tf" }}
-  ```
-
-  ### versions.tf
-  ```hcl
-  {{ include "examples/complete/versions.tf" }}
   ```
 
   ### Environment Variables
