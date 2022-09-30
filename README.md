@@ -21,6 +21,25 @@ module "link_aggregation" {
 }
 ```
 
+### provider.tf
+```hcl
+terraform {
+  required_providers {
+    intersight = {
+      source  = "CiscoDevNet/intersight"
+      version = ">=1.0.32"
+    }
+  }
+  required_version = ">=1.3.0"
+}
+
+provider "intersight" {
+  apikey    = var.apikey
+  endpoint  = var.endpoint
+  secretkey = var.secretkey
+}
+```
+
 ### variables.tf
 ```hcl
 variable "apikey" {
@@ -42,24 +61,6 @@ variable "secretkey" {
 }
 ```
 
-### versions.tf
-```hcl
-terraform {
-  required_providers {
-    intersight = {
-      source  = "CiscoDevNet/intersight"
-      version = ">=1.0.32"
-    }
-  }
-}
-
-provider "intersight" {
-  apikey    = var.apikey
-  endpoint  = var.endpoint
-  secretkey = var.secretkey
-}
-```
-
 ### Environment Variables
 
 Terraform Cloud/Enterprise - Workspace Variables
@@ -75,7 +76,7 @@ export TF_VAR_secretkey=`cat <secret-key-file-location>`
 Windows
 ```bash
 $env:TF_VAR_apikey="<your-api-key>"
-$env:TF_VAR_secretkey="<secret-key-file-location>""
+$env:TF_VAR_secretkey="<secret-key-file-location>"
 ```
 
 

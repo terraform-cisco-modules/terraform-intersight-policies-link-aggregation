@@ -10,7 +10,7 @@ data "intersight_organization_organization" "org_moid" {
       regexall("[[:xdigit:]]{24}", var.organization)
     ) == 0
   }
-  name     = each.value
+  name = each.value
 }
 
 #__________________________________________________________________
