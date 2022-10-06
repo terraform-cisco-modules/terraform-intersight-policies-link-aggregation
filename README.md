@@ -1,9 +1,14 @@
 <!-- BEGIN_TF_DOCS -->
+[![Tests](https://github.com/terraform-cisco-modules/terraform-intersight-policies-link-aggregation/actions/workflows/terratest.yml/badge.svg)](https://github.com/terraform-cisco-modules/terraform-intersight-policies-link-aggregation/actions/workflows/terratest.yml)
 # Terraform Intersight Policies - Link Aggregation
 Manages Intersight Link Aggregation Policies
 
 Location in GUI:
 `Policies` » `Create Policy` » `Link Aggregation`
+
+## Easy IMM
+
+[*Easy IMM - Comprehensive Example*](https://github.com/terraform-cisco-modules/easy-imm-comprehensive-example) - A comprehensive example for policies, pools, and profiles.
 
 ## Example
 
