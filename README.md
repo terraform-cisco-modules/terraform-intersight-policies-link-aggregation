@@ -104,9 +104,6 @@ export TF_VAR_secretkeyfile="<secret-key-file-location>"
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_apikey"></a> [apikey](#input\_apikey) | Intersight API Key. | `string` | n/a | yes |
-| <a name="input_endpoint"></a> [endpoint](#input\_endpoint) | Intersight URL. | `string` | `"https://intersight.com"` | no |
-| <a name="input_secretkey"></a> [secretkey](#input\_secretkey) | Intersight Secret Key. | `string` | n/a | yes |
 | <a name="input_description"></a> [description](#input\_description) | Description for the Policy. | `string` | `""` | no |
 | <a name="input_lacp_rate"></a> [lacp\_rate](#input\_lacp\_rate) | Flag used to indicate whether LACP PDUs are to be sent 'fast', i.e., every 1 second.<br>* fast - The fast timeout rate is 1 second.<br>* normal - The normal timeout rate is 30 seconds. | `string` | `"normal"` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name for the Policy. | `string` | `"link_aggregation"` | no |
